@@ -45,8 +45,8 @@
                 or member_phone like concat('%',#{condition},'%')
                 or member_email like concat('%',#{condition},'%'))
             </if>
-            <if test="createTime != null">
-                and unix_timestamp(m.member_create_time) > unix_timestamp(#{createTime})
+            <if test="startTime != null and startTime != ''">
+                and member_create_time between #{startTime} and #{endTime}
             </if>
         </trim>
     </select>
@@ -75,4 +75,36 @@
         </trim>
         where member_id=#{member.memberId}
     </update>
+
+    <insert id="insert" keyProperty="member.memberId" useGeneratedKeys="true">
+        insert into member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="member.memberName != null and member.memberName != ''">
+                member_name,
+            </if>
+            <if test="member.memberPassword != null and member.memberPassword != ''">
+                member_password,
+            </if>
+            <if test="member.memberPhone != null and member.memberPhone != ''">
+                member_phone,
+            </if>
+            <if test="member.memberEmail != null and member.memberEmail != ''">
+                member_email,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="member.memberName != null and member.memberName != ''">
+                member_name=#{member.memberName},
+            </if>
+            <if test="member.memberPassword != null and member.memberPassword != ''">
+                member_password=#{member.memberPassword},
+            </if>
+            <if test="member.memberPhone != null and member.memberPhone != ''">
+                member_phone=#{member.memberPhone},
+            </if>
+            <if test="member.memberEmail != null and member.memberEmail != ''">
+                member_email=#{member.memberEmail},
+            </if>
+        </trim>
+    </insert>
 </mapper>

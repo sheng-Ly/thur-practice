@@ -15,7 +15,7 @@ public enum StatusCodeEnum {
     /**
      * 未知错误相关信息
      */
-    ERROR(40000, "error", "失败"),
+    ERROR(40010, "error", "失败"),
     /**
      * 数据库的异常信息
      */
@@ -23,7 +23,19 @@ public enum StatusCodeEnum {
     /**
      * 业务层的异常信息
      */
-    SERVICE_ERROR(40002, "service_error", "系统繁忙，请稍后再试");
+    SERVICE_ERROR(40002, "service_error", "系统繁忙，请稍后再试"),
+    /**
+     * 参数错误
+     */
+    PARAM_ERROR(40000, "param_error", "参数错误"),
+    /**
+     * 修改错误
+     */
+    UPDATE_ERROR(40003, "update_error", "修改失败"),
+    /**
+     * 插入错误
+     */
+    INSERT_ERROR(40004, "insert_error", "添加失败");
 
     /**
      * 状态码

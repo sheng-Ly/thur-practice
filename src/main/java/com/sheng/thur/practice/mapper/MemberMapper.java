@@ -4,7 +4,6 @@ import com.sheng.thur.practice.domain.entity.Member;
 import com.sheng.thur.practice.exception.DaoException;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,15 +27,17 @@ public interface MemberMapper {
     /**
      * 根据传入的条件进行模糊查询
      *
-     * @param condition  用户名、邮箱或者手机号码
-     * @param createTime 查找时间区间开始
-     * @param index      开始查询的索引
-     * @param rows       查询的挑食
+     * @param condition 用户名、邮箱或者手机号码
+     * @param startTime 查找时间区间开始
+     * @param endTime   查找时间区间结束
+     * @param index     开始查询的索引
+     * @param rows      查询的挑食
      * @return 查询到的 member 集合
      * @throws DaoException dao 层可能发生的异常
      */
     List<Member> selectByCondition(@Param("condition") String condition,
-                                   @Param("createTime") Date createTime,
+                                   @Param("startTime") String startTime,
+                                   @Param("endTime") String endTime,
                                    @Param("index") int index,
                                    @Param("rows") int rows) throws DaoException;
 
@@ -48,4 +49,12 @@ public interface MemberMapper {
      * @return 影响行数
      */
     int update(@Param("member") Member member);
+
+    /**
+     * 根据传入的 member 对象进行插入
+     *
+     * @param member member 对象
+     * @return 影响行数
+     */
+    int insert(@Param("member") Member member);
 }

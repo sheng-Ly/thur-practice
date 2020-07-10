@@ -18,4 +18,12 @@ public interface MemberInfoMapper {
      * @return 影响行数
      */
     int update(@Param("memberInfo") MemberInfo memberInfo);
+
+    /**
+     * 根据传入的数据进行插入
+     *
+     * @param memberInfo MemberInfo 对象
+     * @return 影响行数
+     */
+    int insert(@Param("memberInfo") MemberInfo memberInfo);
 }

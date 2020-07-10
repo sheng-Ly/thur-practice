@@ -1,10 +1,8 @@
 package com.sheng.thur.practice.domain.dto;
 
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Description：用于接收 json 数据
@@ -20,10 +18,9 @@ public class MemberConditionDto implements Serializable {
      */
     private String condition;
     /**
-     * 时间，格式化参数
+     * 时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date createTime;
+    private String createTime;
     /**
      * 当前页
      */

@@ -1,6 +1,7 @@
 package com.sheng.thur.practice.controller;
 
 import com.sheng.thur.practice.domain.dto.MemberConditionDto;
+import com.sheng.thur.practice.domain.dto.MemberDto;
 import com.sheng.thur.practice.domain.dto.ResultDto;
 import com.sheng.thur.practice.domain.entity.Member;
 import com.sheng.thur.practice.domain.vo.ResultVo;
@@ -60,8 +61,7 @@ public class MemberListController {
     @PostMapping("/findMemberByCondition")
     public ResultVo<ResultDto<List<Member>>> findMemberByCondition(@RequestBody MemberConditionDto memberConditionDto) throws Exception {
         // 查询数据
-        ResultDto<List<Member>> resultDto = memberService.findMemberByCondition(memberConditionDto.getCondition(),
-                memberConditionDto.getCreateTime(), memberConditionDto.getPage(), memberConditionDto.getSize());
+        ResultDto<List<Member>> resultDto = memberService.findMemberByCondition(memberConditionDto);
         // 进行判断
         if (resultDto != null) {
             // 判断数据是否正常
@@ -73,5 +73,35 @@ public class MemberListController {
         } else {
             return ResultVo.error(StatusCodeEnum.SERVICE_ERROR);
         }
+    }
+
+    /**
+     * 修改会员信息的方法
+     *
+     * @param memberDto 携带了信息的 JSON 数据
+     * @return 封装了修改结果的 JavaBean
+     * @throws Exception 可能出现的异常
+     */
+    @PostMapping("/updateMemberInfo")
+    public ResultVo<ResultDto<Integer>> updateMemberInfo(@RequestBody MemberDto memberDto) throws Exception {
+        // 进行修改
+        ResultDto<Integer> resultDto = memberService.update(memberDto);
+        // 响应成功
+        return ResultVo.success(StatusCodeEnum.SUCCESS, resultDto);
+    }
+
+    /**
+     * 注册会员的方法（未解决异常问题，在拷贝赋值那一环有问题）
+     *
+     * @param memberDto 携带了信息的 JSON 数据
+     * @return 封装了修改结果的 JavaBean
+     * @throws Exception 可能出现的异常
+     */
+    @PostMapping("/addMember")
+    public ResultVo<ResultDto<Integer>> addMember(@RequestBody MemberDto memberDto) throws Exception {
+        // 进行添加用户
+        ResultDto<Integer> resultDto = memberService.addMember(memberDto);
+        // 响应成功
+        return ResultVo.success(StatusCodeEnum.SUCCESS, resultDto);
     }
 }

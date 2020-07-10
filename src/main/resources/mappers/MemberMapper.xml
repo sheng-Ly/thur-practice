@@ -8,23 +8,71 @@
         <id column="member_id" property="memberId"/>
         <result column="member_name" property="memberName"/>
         <result column="member_password" property="memberPassword"/>
-        <result column="member_sex" property="memberSex"/>
         <result column="member_phone" property="memberPhone"/>
         <result column="member_email" property="memberEmail"/>
-        <result column="member_address" property="memberAddress"/>
         <result column="member_create_time" property="memberCreateTime"/>
         <result column="member_grade" property="memberGrade"/>
         <result column="status" property="status"/>
+        <association property="memberInfo" resultMap="com.sheng.thur.practice.mapper.MemberInfoMapper.baseResultMap"/>
     </resultMap>
 
     <sql id="base_Column_List">
-        member_id, member_name, member_password, member_sex, member_phone, member_email,
-        member_address, member_create_time, member_grade, status
+        m.member_id, m.member_name, m.member_password, m.member_phone, m.member_email,
+        m.member_create_time, m.member_grade, status
+    </sql>
+
+    <sql id="member_memberInfo_Column">
+        m.member_id, m.member_name, m.member_password, m.member_phone, m.member_email,
+        m.member_create_time, m.member_grade, m.status,
+        mi.member_info_id, mi.member_info_realname, mi.member_info_Telephone,
+        mi.member_info_sex, mi.member_info_address
     </sql>
 
     <select id="selectList" resultMap="baseResultMap">
         select
-        <include refid="base_Column_List"/>
-        from member
+        <include refid="member_memberInfo_Column"/>
+        from member m left join member_info mi on m.member_id = mi.member_id
+        limit #{index},#{rows}
     </select>
+
+    <select id="selectByCondition" resultMap="baseResultMap">
+        select
+        <include refid="member_memberInfo_Column"/>
+        from member m left join member_info mi on m.member_id = mi.member_id
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="condition != null and condition != ''">
+                (member_name like concat('%',#{condition},'%')
+                or member_phone like concat('%',#{condition},'%')
+                or member_email like concat('%',#{condition},'%'))
+            </if>
+            <if test="createTime != null">
+                and unix_timestamp(m.member_create_time) > unix_timestamp(#{createTime})
+            </if>
+        </trim>
+    </select>
+
+    <update id="update">
+        update member
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="member.memberName != null and member.memberName != ''">
+                member_name=#{member.memberName},
+            </if>
+            <if test="member.memberPassword != null and member.memberPassword != ''">
+                member_password=#{member.memberPassword},
+            </if>
+            <if test="member.memberPhone != null and member.memberPhone != ''">
+                member_phone=#{member.memberPhone},
+            </if>
+            <if test="member.memberEmail != null and member.memberEmail != ''">
+                member_email=#{member.memberEmail},
+            </if>
+            <if test="member.memberGrade != null">
+                member_grade=#{member.memberGrade},
+            </if>
+            <if test="member.status != null">
+                status=#{member.status},
+            </if>
+        </trim>
+        where member_id=#{member.memberId}
+    </update>
 </mapper>

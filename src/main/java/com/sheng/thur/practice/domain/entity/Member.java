@@ -27,10 +27,6 @@ public class Member implements Serializable {
      */
     private String memberPassword;
     /**
-     * 会员性别，默认 -1，0 为女，1 为男
-     */
-    private Integer memberSex;
-    /**
      * 会员手机号，不能为空，用于登录
      */
     private String memberPhone;
@@ -38,10 +34,6 @@ public class Member implements Serializable {
      * 会员邮箱，可为空，可用于登录
      */
     private String memberEmail;
-    /**
-     * 会员地址
-     */
-    private String memberAddress;
     /**
      * 会员创建时间
      */
@@ -51,7 +43,11 @@ public class Member implements Serializable {
      */
     private Integer memberGrade;
     /**
-     * 状态，默认为 1 激活状态，0 为停用假删除状态
+     * 状态，默认为 1 激活状态，0 为停用(用户不可登录)，-1 为假删除状态
      */
     private Integer status;
+    /**
+     * 会员信息表，一对一关系
+     */
+    private MemberInfo memberInfo;
 }

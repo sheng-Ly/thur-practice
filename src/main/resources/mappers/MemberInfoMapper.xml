@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sheng.thur.practice.mapper.MemberInfoMapper">
+    <resultMap id="baseResultMap" type="MemberInfo">
+        <id column="member_info_id" property="memberInfoId"/>
+        <result column="member_id" property="memberId"/>
+        <result column="member_info_realname" property="memberInfoRealName"/>
+        <result column="member_info_Telephone" property="memberInfoTelephone"/>
+        <result column="member_info_sex" property="memberInfoSex"/>
+        <result column="member_info_address" property="memberInfoAddress"/>
+    </resultMap>
+
+    <sql id="base_Column_List">
+        mi.member_info_id, mi.member_id, mi.member_info_realname, mi.member_info_Telephone,
+        mi.member_info_sex, mi.member_info_address
+    </sql>
+
+    <update id="update">
+        update member_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberInfo.memberInfoRealName != null and memberInfo.memberInfoRealName != ''">
+                member_info_realname=#{memberInfo.memberInfoRealName}},
+            </if>
+            <if test="memberInfo.memberInfoTelephone != null and memberInfo.memberInfoTelephone != ''">
+                member_info_Telephone=#{memberInfo.memberInfoTelephone},
+            </if>
+            <if test="memberInfo.memberInfoSex != null">
+                member_info_sex=#{memberInfo.memberInfoSex}
+            </if>
+            <if test="memberInfo.memberInfoAddress != null and memberInfo.memberInfoAddress != ''">
+                member_info_address=#{memberInfo.memberInfoAddress}
+            </if>
+        </trim>
+        where member_id=#{memberInfo.memberId}
+    </update>
+</mapper>

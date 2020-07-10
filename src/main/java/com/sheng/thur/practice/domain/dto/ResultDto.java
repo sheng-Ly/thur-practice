@@ -19,6 +19,9 @@ public class ResultDto<T> implements Serializable {
     private String hint;
     private T data;
 
+    public ResultDto() {
+    }
+
     /**
      * 成功返回信息
      *

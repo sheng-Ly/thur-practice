@@ -31,6 +31,9 @@ public class ResultVo<T> implements Serializable {
      */
     private T data;
 
+    public ResultVo() {
+    }
+
     /**
      * 成功返回信息
      *

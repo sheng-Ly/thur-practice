@@ -9,7 +9,7 @@ import com.sheng.thur.practice.exception.ServiceException;
 import com.sheng.thur.practice.mapper.MemberInfoMapper;
 import com.sheng.thur.practice.mapper.MemberMapper;
 import com.sheng.thur.practice.service.MemberService;
-import com.sheng.thur.practice.util.IsAllFilesNullUtils;
+import com.sheng.thur.practice.util.IsAllFieldsNullUtils;
 import com.sheng.thur.practice.util.StatusCodeEnum;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -111,18 +111,18 @@ public class MemberServiceImpl implements MemberService {
         // 修改前对参数进行非空判断
         // 排除判断的成员变量名
         String exclude = "memberId";
-        if (IsAllFilesNullUtils.isNull(memberDto)) {
+        if (IsAllFieldsNullUtils.isNull(memberDto)) {
             // 如果为空，则无法修改
             return ResultDto.error(StatusCodeEnum.PARAM_ERROR);
         }
         // 修改的影响行数
         int updateMemberRows = 0;
-        if (!IsAllFilesNullUtils.isNull(member, exclude)) {
+        if (!IsAllFieldsNullUtils.isNull(member, exclude)) {
             updateMemberRows = memberMapper.update(member);
         }
         // 修改的影响行数
         int updateMemberInfoRows = 0;
-        if (!IsAllFilesNullUtils.isNull(memberInfo, exclude)) {
+        if (!IsAllFieldsNullUtils.isNull(memberInfo, exclude)) {
             updateMemberInfoRows = memberInfoMapper.update(memberInfo);
         }
         // 总共修改的行数
@@ -166,7 +166,7 @@ public class MemberServiceImpl implements MemberService {
             // 排除判断的成员变量名
             String fieldName = "memberId";
             // 进行非空判断
-            if (!IsAllFilesNullUtils.isNull(memberInfo, fieldName)) {
+            if (!IsAllFieldsNullUtils.isNull(memberInfo, fieldName)) {
                 insertMemberInfoRows = memberInfoMapper.insert(memberInfo);
             }
         }

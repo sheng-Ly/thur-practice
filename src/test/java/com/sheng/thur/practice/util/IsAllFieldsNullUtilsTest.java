@@ -11,7 +11,7 @@ import org.junit.Test;
  * @date 2020/7/10 23:57
  * @since JDK 1.8
  */
-public class IsAllFilesNullUtilsTest {
+public class IsAllFieldsNullUtilsTest {
     @Test
     public void isNull() throws ServiceException {
         MemberDto memberDto = new MemberDto();
@@ -19,6 +19,6 @@ public class IsAllFilesNullUtilsTest {
         memberDto.setMemberInfoId(1);
 //        memberDto.setMemberName("1332");
 //        memberDto.setMemberEmail("13e434ty");
-        System.out.println(IsAllFilesNullUtils.isNull(memberDto, "memberId", "memberInfoId"));
+        System.out.println(IsAllFieldsNullUtils.isNull(memberDto, "memberId", "memberInfoId"));
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
  * @date 2020/7/10 22:21
  * @since JDK 1.8
  */
-public class IsAllFilesNullUtils {
+public class IsAllFieldsNullUtils {
     /**
      * @param o          要判断属性是否为空的对象
      * @param fieldNames 要排除的属性名

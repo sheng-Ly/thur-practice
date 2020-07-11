@@ -41,6 +41,13 @@ public interface MemberMapper {
                                    @Param("index") int index,
                                    @Param("rows") int rows) throws DaoException;
 
+    /**
+     * 根据主键查询会员
+     *
+     * @param memberId 会员 id，主键
+     * @return Member 对象
+     */
+    Member selectStatusByPrimaryKey(@Param("memberId") int memberId);
 
     /**
      * 根据传入的 Member 对象进行修改
@@ -57,4 +64,12 @@ public interface MemberMapper {
      * @return 影响行数
      */
     int insert(@Param("member") Member member);
+
+    /**
+     * 根据主键进行假删除，设置为 -1
+     *
+     * @param memberId 会员 id
+     * @return 影响行数
+     */
+    int deleteMember(@Param("memberId") int memberId);
 }

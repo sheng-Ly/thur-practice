@@ -58,19 +58,19 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="memberInfo.memberId != null">
-                member_id=#{memberInfo.memberId},
+                #{memberInfo.memberId},
             </if>
             <if test="memberInfo.memberInfoRealName != null and memberInfo.memberInfoRealName != ''">
-                member_info_realname=#{memberInfo.memberInfoRealName},
+                #{memberInfo.memberInfoRealName},
             </if>
             <if test="memberInfo.memberInfoTelephone != null and memberInfo.memberInfoTelephone != ''">
-                member_info_Telephone=#{memberInfo.memberInfoTelephone},
+                #{memberInfo.memberInfoTelephone},
             </if>
             <if test="memberInfo.memberInfoSex != null">
-                member_info_sex=#{memberInfo.memberInfoSex},
+                #{memberInfo.memberInfoSex},
             </if>
             <if test="memberInfo.memberInfoAddress != null and memberInfo.memberInfoAddress != ''">
-                member_info_address=#{memberInfo.memberInfoAddress},
+                #{memberInfo.memberInfoAddress},
             </if>
         </trim>
     </insert>

@@ -35,7 +35,15 @@ public enum StatusCodeEnum {
     /**
      * 插入错误
      */
-    INSERT_ERROR(40004, "insert_error", "添加失败");
+    INSERT_ERROR(40004, "insert_error", "添加失败"),
+    /**
+     * 账号异常
+     */
+    STATUS_ERROR(40005, "status_error", "账号异常"),
+    /**
+     * 删除错误
+     */
+    DELETE_ERROR(40006, "delete_error", "删除失败");
 
     /**
      * 状态码

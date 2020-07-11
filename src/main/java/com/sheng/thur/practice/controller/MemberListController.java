@@ -5,6 +5,7 @@ import com.sheng.thur.practice.domain.dto.MemberDto;
 import com.sheng.thur.practice.domain.dto.ResultDto;
 import com.sheng.thur.practice.domain.entity.Member;
 import com.sheng.thur.practice.domain.vo.ResultVo;
+import com.sheng.thur.practice.exception.ServiceException;
 import com.sheng.thur.practice.service.MemberService;
 import com.sheng.thur.practice.util.StatusCodeEnum;
 import org.springframework.web.bind.annotation.*;
@@ -91,7 +92,7 @@ public class MemberListController {
     }
 
     /**
-     * 注册会员的方法（未解决异常问题，在拷贝赋值那一环有问题）
+     * 注册会员的方法
      *
      * @param memberDto 携带了信息的 JSON 数据
      * @return 封装了修改结果的 JavaBean
@@ -101,6 +102,36 @@ public class MemberListController {
     public ResultVo<ResultDto<Integer>> addMember(@RequestBody MemberDto memberDto) throws Exception {
         // 进行添加用户
         ResultDto<Integer> resultDto = memberService.addMember(memberDto);
+        // 响应成功
+        return ResultVo.success(StatusCodeEnum.SUCCESS, resultDto);
+    }
+
+    /**
+     * 修改状态
+     *
+     * @param memberId 会员 id
+     * @return 封装了修改结果的 JavaBean
+     * @throws ServiceException 可能出现的异常
+     */
+    @PutMapping("/updateMemberStatus")
+    public ResultVo<ResultDto<Integer>> updateMemberStatus(@RequestParam("memberId") String memberId) throws Exception {
+        // 进行修改
+        ResultDto<Integer> resultDto = memberService.updateMemberStatus(memberId);
+        // 响应成功
+        return ResultVo.success(StatusCodeEnum.SUCCESS, resultDto);
+    }
+
+    /**
+     * 删除会员
+     *
+     * @param memberId 会员 id
+     * @return 封装了删除结果的 JavaBean
+     * @throws Exception 可能出现的异常
+     */
+    @PutMapping("/deleteMember")
+    public ResultVo<ResultDto<Integer>> deleteMember(@RequestParam("memberId") String memberId) throws Exception {
+        // 进行删除
+        ResultDto<Integer> resultDto = memberService.deleteMember(memberId);
         // 响应成功
         return ResultVo.success(StatusCodeEnum.SUCCESS, resultDto);
     }

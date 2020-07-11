@@ -52,4 +52,22 @@ public interface MemberService {
      * @throws ServiceException 异常
      */
     ResultDto<Integer> addMember(MemberDto memberDto) throws ServiceException;
+
+    /**
+     * 根据传入的会员 id 修改状态
+     *
+     * @param memberId 会员 id
+     * @return 携带了修改结果的对象
+     * @throws ServiceException 可能出现的异常
+     */
+    ResultDto<Integer> updateMemberStatus(String memberId) throws ServiceException;
+
+    /**
+     * 根据会员 id 删除会员
+     *
+     * @param memberId 会员 id
+     * @return 携带了删除结果的对象
+     * @throws ServiceException 可能出现的异常
+     */
+    ResultDto<Integer> deleteMember(String memberId) throws ServiceException;
 }

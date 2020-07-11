@@ -32,6 +32,7 @@
         select
         <include refid="member_memberInfo_Column"/>
         from member m left join member_info mi on m.member_id = mi.member_id
+        where m.status > -1
         limit #{index},#{rows}
     </select>
 
@@ -39,9 +40,10 @@
         select
         <include refid="member_memberInfo_Column"/>
         from member m left join member_info mi on m.member_id = mi.member_id
-        <trim prefix="where" prefixOverrides="AND|OR">
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            m.status > -1
             <if test="condition != null and condition != ''">
-                (member_name like concat('%',#{condition},'%')
+                and (member_name like concat('%',#{condition},'%')
                 or member_phone like concat('%',#{condition},'%')
                 or member_email like concat('%',#{condition},'%'))
             </if>
@@ -49,6 +51,14 @@
                 and member_create_time between #{startTime} and #{endTime}
             </if>
         </trim>
+        limit #{index},#{rows}
+    </select>
+
+    <select id="selectStatusByPrimaryKey" resultMap="baseResultMap">
+        select
+        m.member_id, m.status
+        from member m
+        where m.member_id=#{memberId}
     </select>
 
     <update id="update">
@@ -76,7 +86,7 @@
         where member_id=#{member.memberId}
     </update>
 
-    <insert id="insert" keyProperty="member.memberId" useGeneratedKeys="true">
+    <insert id="insert" keyColumn="member_id" keyProperty="memberId" useGeneratedKeys="true">
         insert into member
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="member.memberName != null and member.memberName != ''">
@@ -94,17 +104,23 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="member.memberName != null and member.memberName != ''">
-                member_name=#{member.memberName},
+                #{member.memberName},
             </if>
             <if test="member.memberPassword != null and member.memberPassword != ''">
-                member_password=#{member.memberPassword},
+                #{member.memberPassword},
             </if>
             <if test="member.memberPhone != null and member.memberPhone != ''">
-                member_phone=#{member.memberPhone},
+                #{member.memberPhone},
             </if>
             <if test="member.memberEmail != null and member.memberEmail != ''">
-                member_email=#{member.memberEmail},
+                #{member.memberEmail},
             </if>
         </trim>
     </insert>
+
+    <update id="deleteMember">
+        update member m
+        set m.status=-1
+        where m.member_id=#{memberId}
+    </update>
 </mapper>

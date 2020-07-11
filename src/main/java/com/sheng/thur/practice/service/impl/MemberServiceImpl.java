@@ -181,4 +181,65 @@ public class MemberServiceImpl implements MemberService {
             return ResultDto.error(StatusCodeEnum.INSERT_ERROR);
         }
     }
+
+    @Override
+    public ResultDto<Integer> updateMemberStatus(String memberId) throws ServiceException {
+        // 进行非空判断
+        if (memberId == null || Objects.equals("", memberId)) {
+            throw new ServiceException(StatusCodeEnum.PARAM_ERROR);
+        }
+        // 主键要大于 0
+        int id = Integer.parseInt(memberId);
+        if (id <= 0) {
+            throw new ServiceException(StatusCodeEnum.PARAM_ERROR);
+        }
+        // 根据 id 查询状态
+        Member member = memberMapper.selectStatusByPrimaryKey(id);
+        // 非空判断
+        if (member == null) {
+            // 账号异常，查询失败
+            return ResultDto.error(StatusCodeEnum.STATUS_ERROR);
+        }
+        Integer status = member.getStatus();
+        // 判断状态
+        if (status == 0) {
+            status = 1;
+        } else if (status == 1) {
+            status = 0;
+        } else {
+            throw new ServiceException(StatusCodeEnum.UPDATE_ERROR);
+        }
+        // 设置状态
+        member.setStatus(status);
+        // 进行修改
+        int updateRows = memberMapper.update(member);
+        // 判断是否成功
+        if (updateRows > 0) {
+            return ResultDto.success(StatusCodeEnum.SUCCESS, updateRows);
+        } else {
+            return ResultDto.error(StatusCodeEnum.UPDATE_ERROR);
+        }
+    }
+
+    @Override
+    public ResultDto<Integer> deleteMember(String memberId) throws ServiceException {
+        // 非空判断
+        if (memberId == null || Objects.equals("", memberId)) {
+            throw new ServiceException(StatusCodeEnum.PARAM_ERROR);
+        }
+        // 转换
+        int id = Integer.parseInt(memberId);
+        // 判断是否是正常主键
+        if (id <= 0) {
+            throw new ServiceException(StatusCodeEnum.PARAM_ERROR);
+        }
+        // 进行修改
+        int deleteMemberRows = memberMapper.deleteMember(id);
+        // 判断是否成功
+        if (deleteMemberRows > 0) {
+            return ResultDto.success(StatusCodeEnum.SUCCESS, deleteMemberRows);
+        } else {
+            return ResultDto.error(StatusCodeEnum.DELETE_ERROR);
+        }
+    }
 }
